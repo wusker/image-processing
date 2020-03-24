@@ -1,7 +1,5 @@
 # Jimp Personal Image Processor
 
-Node + Jimp = ❤️
-
 Still not sure if Jimp is the way to go here.
 
 ## Getting Started
