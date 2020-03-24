@@ -1,36 +1,12 @@
 const Jimp = require('jimp');
 
-async function large(image, width, height) {
-  const SCALE_FACTOR = 1.5;
-
+async function process(size, image, width, height, scale, quality) {
   image
-    .cover(width / SCALE_FACTOR, height / SCALE_FACTOR)
-    .quality(100)
-    .write(`output_large.jpg`);
+    .cover(width / scale, height / scale)
+    .quality(quality)
+    .write(`output-${size}.jpg`);
 
-  return 'Finished processing large image';
-}
-
-async function medium(image, width, height) {
-  const SCALE_FACTOR = 2.5;
-
-  image
-    .cover(width / SCALE_FACTOR, height / SCALE_FACTOR)
-    .quality(100)
-    .write(`output_medium.jpg`);
-
-  return 'Finished processing medium image';
-}
-
-async function small(image, width, height) {
-  const SCALE_FACTOR = 5;
-
-  image
-    .cover(width / SCALE_FACTOR, height / SCALE_FACTOR)
-    .quality(100)
-    .write(`output_small.jpg`);
-
-  return 'Finished processing small image';
+  return `Finished processing ${size} image`;
 }
 
 async function go() {
@@ -39,9 +15,10 @@ async function go() {
   const height = image.getHeight();
 
   const promises = [
-    small(image, width, height),
-    medium(image, width, height),
-    large(image, width, height),
+    process('smallest', image, width, height, 5, 100),
+    process('small', image, width, height, 3.5, 100),
+    process('medium', image, width, height, 2.5, 100),
+    process('large', image, width, height, 1.5, 100),
   ];
 
   Promise.all(promises).then(message => {
