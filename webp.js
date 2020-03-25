@@ -1,26 +1,32 @@
 const sharp = require('sharp');
+const makeDir = require('./util');
 
-function process(input, size, width) {
-  sharp(input)
+function process(filename, size, width) {
+  sharp(`./uploads/${filename}`)
     .resize({ width })
     .webp({ lossless: true })
-    .toFile(`output-${size}.jpg`)
+    .toFile(
+      `./processed-webp/${filename.replace(
+        /.jpg|.jpeg|.png|.gif/gi,
+        ''
+      )}-${size}.webp`
+    )
     .then(() => `Done processing ${size} image`)
     .catch(err => console.log(err));
 }
 
 async function go(filename) {
-  const input = `./uploads/${filename}`;
+  makeDir();
 
   const promises = [
-    process(input, 'smallest', 600),
-    process(input, 'small', 750),
-    process(input, 'medium', 1000),
-    process(input, 'large', 1500),
+    process(filename, 'smallest', 600),
+    process(filename, 'small', 750),
+    process(filename, 'medium', 1000),
+    process(filename, 'large', 1500),
   ];
 
   Promise.all(promises).then(() => {
-    console.log('\x1b[33m', 'Done processing images with WebP ');
+    console.log('\x1b[33m', 'Done processing images as WebP ');
   });
 }
 

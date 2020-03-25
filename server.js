@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
-const sharp = require('./sharp');
+
+const image = require('./process');
+const webp = require('./webp');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -44,17 +46,19 @@ app.post('/upload', (req, res) => {
   upload(req, res, err => {
     if (err) {
       console.log(err);
-      res.send('Error uploading!');
+      res.status(415).send('Error uploading!');
     } else {
       console.log(`Uploaded ${req.file.filename}`);
-      sharp.go(req.file.filename);
+      image.go(req.file.filename);
+      webp.go(req.file.filename);
+      res.status(201).send('Uploaded');
     }
   });
 });
 
 app.use('/', (req, res) => {
   res.json({
-    welcome: 'Local Image Processor',
+    welcome: 'Local Image Processor from wtype',
   });
 });
 

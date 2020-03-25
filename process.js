@@ -1,29 +1,36 @@
-const Jimp = require('jimp');
+const sharp = require('sharp');
+const path = require('path');
+const makeDir = require('./util');
 
-async function process(size, image, width, height, scale, quality) {
-  image
-    .cover(width / scale, height / scale)
-    .quality(quality)
-    .write(`output-${size}.jpg`);
-
-  return `Finished processing ${size} image`;
+function process(filename, size, width) {
+  sharp(`./uploads/${filename}`)
+    .resize({ width })
+    .toFile(
+      `./processed/${filename.replace(
+        /.jpg|.jpeg|.png|.gif/gi,
+        ''
+      )}-${size}${path.extname(filename)}`
+    )
+    .then(() => `Done processing ${size} image`)
+    .catch(err => console.log(err));
 }
 
-async function go() {
-  const image = await Jimp.read('input.jpg');
-  const width = image.getWidth();
-  const height = image.getHeight();
+async function go(filename) {
+  makeDir();
 
   const promises = [
-    process('smallest', image, width, height, 5, 100),
-    process('small', image, width, height, 3.5, 100),
-    process('medium', image, width, height, 2.5, 100),
-    process('large', image, width, height, 1.5, 100),
+    process(filename, 'smallest', 600),
+    process(filename, 'small', 750),
+    process(filename, 'medium', 1000),
+    process(filename, 'large', 1500),
   ];
 
-  Promise.all(promises).then(message => {
-    console.log(message, '\x1b[43m', 'Done processing images ');
+  Promise.all(promises).then(() => {
+    console.log('\x1b[33m', 'Done processing images ');
   });
 }
 
-go();
+module.exports = {
+  process,
+  go,
+};
