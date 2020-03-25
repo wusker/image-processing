@@ -9,7 +9,7 @@ Currently statically set to run on localhost:5500 with server @ localhost:9090. 
 ```
 yarn
 
-yarn start
+yarn serve
 ```
 
 ## Future
