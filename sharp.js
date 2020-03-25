@@ -6,7 +6,7 @@ function process(filename, size, width) {
     .resize({ width })
     .toFile(
       `./processed/${filename.replace(
-        /.jpg|.png|.gif/gi,
+        /.jpg|.jpeg|.png|.gif/gi,
         ''
       )}-${size}${path.extname(filename)}`
     )

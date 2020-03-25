@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const path = require('path');
 const sharp = require('./sharp');
 
 const storage = multer.diskStorage({
@@ -12,7 +13,25 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage }).single('image');
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|gif/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
+  }
+  cb('Error: Only Images Allowed');
+}
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 25e6 },
+  fileFilter(req, file, cb) {
+    checkFileType(file, cb);
+  },
+}).single('image');
+
 const app = express();
 
 app.use(

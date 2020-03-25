@@ -39,7 +39,7 @@ function uploadFile(file) {
       console.log('Successfully Uploaded');
     })
     .catch(err => {
-      alert('Error, please upload an image.\n\n', err);
+      console.log('Error, please upload an image.\n\n', err);
     });
 }
 
