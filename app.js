@@ -1,5 +1,4 @@
 const main = document.querySelector('main');
-const form = document.querySelector('form');
 
 function preventDefaults(e) {
   e.preventDefault();
@@ -26,55 +25,36 @@ function unLighten(e) {
   main.addEventListener(eventName, unLighten, false);
 });
 
-// function uploadFile(file) {
-//   const url = 'http://localhost:9090/process';
-//   const formData = new FormData();
-
-//   formData.append('file', file);
-
-//   fetch(url, {
-//     method: 'POST',
-//     body: formData,
-//   })
-//     .then(() => {
-//       console.log(formData, 'Uploaded file');
-//     })
-//     .catch(err => {
-//       alert('Error, please upload an image.\n\n', err);
-//     });
-// }
-
-function uploadFile() {
-  const { files } = document.querySelector('[type=file]');
+function uploadFile(file) {
+  const url = 'http://localhost:9090/upload';
   const formData = new FormData();
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+  formData.append('image', file);
+  console.log(formData);
+  console.log(file);
 
-    formData.append('files[]', file);
-  }
-
-  fetch('http://localhost:9090/process', {
+  fetch(url, {
     method: 'POST',
     body: formData,
-  }).then(response => {
-    console.log(response);
-  });
+  })
+    .then(() => {
+      console.log('Successfully Uploaded');
+    })
+    .catch(err => {
+      alert('Error, please upload an image.\n\n', err);
+    });
 }
 
 function handleFiles(files) {
-  [...files].forEach(uploadFile);
+  [...files].forEach(file => uploadFile(file));
 }
 
 function handleDrop(e) {
   const dt = e.dataTransfer;
   const { files } = dt;
+  console.log(files);
 
   handleFiles(files);
 }
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  uploadFile();
-});
 main.addEventListener('drop', handleDrop, false);
