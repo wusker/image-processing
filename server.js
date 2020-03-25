@@ -1,13 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const sharp = require('./sharp');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, 'uploads/');
   },
   filename(req, file, cb) {
-    cb(null, `${file.fieldname}-${Date.now()}`);
+    cb(null, `${file.originalname}`);
   },
 });
 
@@ -26,15 +27,15 @@ app.post('/upload', (req, res) => {
       console.log(err);
       res.send('Error uploading!');
     } else {
-      console.log(req.file);
-      res.send('test');
+      console.log(`Uploaded ${req.file.filename}`);
+      sharp.go(req.file.filename);
     }
   });
 });
 
 app.use('/', (req, res) => {
   res.json({
-    welcome: 'Welcome to the Image Processor',
+    welcome: 'Local Image Processor',
   });
 });
 

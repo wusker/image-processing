@@ -30,8 +30,6 @@ function uploadFile(file) {
   const formData = new FormData();
 
   formData.append('image', file);
-  console.log(formData);
-  console.log(file);
 
   fetch(url, {
     method: 'POST',
@@ -52,7 +50,6 @@ function handleFiles(files) {
 function handleDrop(e) {
   const dt = e.dataTransfer;
   const { files } = dt;
-  console.log(files);
 
   handleFiles(files);
 }

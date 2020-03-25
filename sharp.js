@@ -1,8 +1,6 @@
 const sharp = require('sharp');
 
-const input = 'input.jpg';
-
-function process(size, width) {
+function process(input, size, width) {
   sharp(input)
     .resize({ width })
     .toFile(`output-${size}.jpg`)
@@ -10,12 +8,14 @@ function process(size, width) {
     .catch(err => console.log(err));
 }
 
-async function go() {
+async function go(filename) {
+  const input = `./uploads/${filename}`;
+
   const promises = [
-    process('smallest', 600),
-    process('small', 750),
-    process('medium', 1000),
-    process('large', 1500),
+    process(input, 'smallest', 600),
+    process(input, 'small', 750),
+    process(input, 'medium', 1000),
+    process(input, 'large', 1500),
   ];
 
   Promise.all(promises).then(() => {
@@ -23,4 +23,7 @@ async function go() {
   });
 }
 
-go();
+module.exports = {
+  process,
+  go,
+};
