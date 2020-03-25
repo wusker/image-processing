@@ -1,21 +1,25 @@
 const sharp = require('sharp');
+const path = require('path');
 
-function process(input, size, width) {
-  sharp(input)
+function process(filename, size, width) {
+  sharp(`./uploads/${filename}`)
     .resize({ width })
-    .toFile(`output-${size}.jpg`)
+    .toFile(
+      `./processed/${filename.replace(
+        /.jpg|.png|.gif/gi,
+        ''
+      )}-${size}${path.extname(filename)}`
+    )
     .then(() => `Done processing ${size} image`)
     .catch(err => console.log(err));
 }
 
 async function go(filename) {
-  const input = `./uploads/${filename}`;
-
   const promises = [
-    process(input, 'smallest', 600),
-    process(input, 'small', 750),
-    process(input, 'medium', 1000),
-    process(input, 'large', 1500),
+    process(filename, 'smallest', 600),
+    process(filename, 'small', 750),
+    process(filename, 'medium', 1000),
+    process(filename, 'large', 1500),
   ];
 
   Promise.all(promises).then(() => {
