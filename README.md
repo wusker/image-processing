@@ -6,11 +6,17 @@ Built with: Node, Express, Multer, and Sharp.
 
 Currently statically set to run on localhost:5500 with server @ localhost:9090. Change this configuration for your own needs.
 
+#### Start Server
+
 ```
 yarn
 
 yarn serve
 ```
+
+#### Start Client in Browser
+
+Run index.html on localhost:5500. Drag and drop images on the screen or browse to upload. Once submitted, these files will be processed and saved to their respective folders in the directory.
 
 ## Future
 
