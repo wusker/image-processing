@@ -9,10 +9,9 @@ function process(filename, size, width) {
       quality: 50,
     })
     .toFile(
-      `./processed-webp/${filename.replace(
-        /.jpg|.jpeg|.png|.gif/gi,
-        ''
-      )}-${size}.webp`
+      `./processed-webp/${filename
+        .replace(/.jpg|.jpeg|.png|.gif/gi, '')
+        .replace(/ /g, '_')}-${size}.webp`
     )
     .then(() => `Done processing ${size} image`)
     .catch(err => console.log(err));

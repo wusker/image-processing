@@ -6,10 +6,9 @@ function process(filename, size, width) {
   sharp(`./uploads/${filename}`)
     .resize({ width })
     .toFile(
-      `./processed/${filename.replace(
-        /.jpg|.jpeg|.png|.gif/gi,
-        ''
-      )}-${size}${path.extname(filename)}`
+      `./processed/${filename
+        .replace(/.jpg|.jpeg|.png|.gif/gi, '')
+        .replace(/ /g, '_')}-${size}${path.extname(filename)}`
     )
     .then(() => `Done processing ${size} image`)
     .catch(err => console.log(err));
