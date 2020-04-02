@@ -18,6 +18,8 @@ yarn serve
 
 Run index.html on localhost:5500. Drag and drop images on the screen or browse to upload. Once submitted, these files will be processed and saved to their respective folders in the directory.
 
+Current app outputs both JPG and WebP formats. Check out [Sharp](https://github.com/lovell/sharp) for more, as it allows for much more powerful image manipulation.
+
 ## Future
 
 The hope is to optimize this system for an efficient workflow and optimized images closer to how [Squoosh](https://squoosh.app/) handles image this process—but this with bulk processing.
