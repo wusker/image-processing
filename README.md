@@ -1,4 +1,4 @@
-# Sharp Personal Image Processor
+# Sharp Local Image Processor
 
 Local drag and drop image processor that resizes and optimizes images for use on the web.
 
