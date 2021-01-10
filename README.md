@@ -22,4 +22,4 @@ Current app outputs both JPG and WebP formats. Check out [Sharp](https://github.
 
 ## Future
 
-The hope is to optimize this system for an efficient workflow and optimized images closer to how [Squoosh](https://squoosh.app/) handles image this process—but this with bulk processing.
+The hope is to optimize this system for an efficient workflow and optimized images closer to how [Squoosh](https://squoosh.app/) handles this process—but this with bulk processing.
